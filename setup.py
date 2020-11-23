@@ -8,7 +8,7 @@ setup(
     version="0.0.1",
     author="Tomasz Kumor",
     author_email="romukkemot@gmail.com",
-    description="A package to convert your Jupyter Notebook",
+    description="Projekt na jezyki skryptowe",
     long_description=readme,
     long_description_content_type="text/markdown",
     url="https://github.com/TiPiKej/jezykiSkryptoweProjekt",
