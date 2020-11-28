@@ -1,6 +1,5 @@
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils.exceptions import InvalidFileException
-import pathlib
 
 
 def copy_file():
