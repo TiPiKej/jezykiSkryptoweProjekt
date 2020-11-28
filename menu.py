@@ -1,25 +1,23 @@
 from copyFile import copy_file
 
-
-def load_file():
-    print("PLIK WCZYTYWANY")
-
-
-def save_file():
-    print("PLIK ZAPISYWANY")
-
-
 menu_option = [
-    {"name": "Wczytaj plik", "function": load_file},
-    {"name": "Zapisz plik", "function": save_file},
     {"name": "Kopiuj plik", "function": copy_file}
 ]
 
 
 def menu():
-    n = 0
+    n = 1
     for option in menu_option:
-        print(n, ": ", option["name"])
+        print("{} : {}".format(n, option["name"]))
         n += 1
-    choice = int(input())
-    return menu_option[choice]["function"]
+    print("{} : {}".format(0, "koniec programu"))
+    while True:
+        choice = int(input("Wybierz opcje: "))
+        if 0 <= choice <= len(menu_option):
+            break
+    if choice == 0:
+        return -1
+    print("-----------------------------")
+    menu_option[choice - 1]["function"]()
+    return choice - 1
+

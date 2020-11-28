@@ -1,5 +1,6 @@
 from menu import menu
 
-fun = menu()
-
-fun()
+while True:
+    choice = menu()
+    if choice == -1:
+        break
