@@ -10,12 +10,14 @@ def copy_file():
     wb2 = Workbook()
 
     try:
+        # zaladowanie arkusza
         wb1 = load_workbook(file_name_src)
+
+        wb2.save(str(file_name_dst))
+        # ustawienie
         ws1 = wb1.worksheets[0]
-
-        wb2 = load_workbook(file_name_src)
         ws2 = wb2.active
-
+        wb2.create_sheet("test")
         for i in range(1, ws1.max_row + 1):
             for j in range(1, ws1.max_column + 1):
                 cell = ws1.cell(row=i, column=j)
@@ -23,7 +25,7 @@ def copy_file():
                 ws2.cell(row=i, column=j).value = cell.value
 
         wb2.save(str(file_name_dst))
-    except InvalidFileException as e:
+    except (InvalidFileException, PermissionError, FileNotFoundError) as e:
         print(e)
     finally:
         wb1.close()
