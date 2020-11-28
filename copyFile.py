@@ -1,13 +1,15 @@
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils.exceptions import InvalidFileException
+import pathlib
 
 
 def copy_file():
-    print("KOPIOWANIE PLIKU")
     file_name_src = input("Wpisz nazwe pliku (lokalizacje) do skopiowania: ")
     file_name_dst = input("Wpisz nazwe pliku (lokalizacje) gdzie skopiowac: ")
     wb1 = Workbook()
     wb2 = Workbook()
+
+    print("KOPIOWANIE PLIKU")
 
     try:
         wb1 = load_workbook(file_name_src)  # zaladowanie arkusza
@@ -28,8 +30,12 @@ def copy_file():
 
         wb2.save(str(file_name_dst))
         print("PLIK SKOPIOWANO")
-    except (InvalidFileException, PermissionError, FileNotFoundError) as e:
-        print(e)
+    except InvalidFileException:
+        print("Nieobslugiwany format pliku!", e.filename)
+    except PermissionError as e:
+        print("Brak uprawnien do pliku!", e.filename)
+    except FileNotFoundError as e:
+        print("Nie znaleziono lokalizacji!", e.filename)
     finally:
         wb1.close()
         wb2.close()
