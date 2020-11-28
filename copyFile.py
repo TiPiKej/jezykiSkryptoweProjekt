@@ -10,19 +10,22 @@ def copy_file():
     wb2 = Workbook()
 
     try:
-        # zaladowanie arkusza
-        wb1 = load_workbook(file_name_src)
+        wb1 = load_workbook(file_name_src)  # zaladowanie arkusza
 
-        wb2.save(str(file_name_dst))
-        # ustawienie
-        ws1 = wb1.worksheets[0]
-        ws2 = wb2.active
-        wb2.create_sheet("test")
-        for i in range(1, ws1.max_row + 1):
-            for j in range(1, ws1.max_column + 1):
-                cell = ws1.cell(row=i, column=j)
+        ws2 = wb2.active  # ustawienie aktywnego arkusza
 
-                ws2.cell(row=i, column=j).value = cell.value
+        ws2.title = wb1.worksheets[0].title  # przepisanie tytulu pierwszego arkusza
+        for n in range(len(wb1.worksheets)):
+            ws1 = wb1.worksheets[n]
+            # ...
+            for i in range(1, ws1.max_row + 1):
+                for j in range(1, ws1.max_column + 1):
+                    cell = ws1.cell(row=i, column=j)
+
+                    ws2.cell(row=i, column=j).value = cell.value
+            # ustawianie tytulow pozostalych arkuszy
+            if n + 1 < len(wb1.worksheets):
+                ws2 = wb2.create_sheet(wb1.worksheets[n + 1].title)
 
         wb2.save(str(file_name_dst))
     except (InvalidFileException, PermissionError, FileNotFoundError) as e:
