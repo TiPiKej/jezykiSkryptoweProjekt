@@ -1,7 +1,9 @@
 from copyFile import copy_file
+from search import search
 
 menu_option = [
-    {"name": "Kopiuj plik", "function": copy_file}
+    {"name": "Kopiuj plik", "function": copy_file},
+    {"name": "Przeszukaj plik", "function": search}
 ]
 
 
@@ -17,7 +19,6 @@ def menu():
             break
     if choice == 0:
         return -1
-    print("-----------------------------")
     menu_option[choice - 1]["function"]()
     return choice - 1
 
