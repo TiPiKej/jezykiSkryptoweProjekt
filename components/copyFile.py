@@ -30,7 +30,7 @@ def copy_file():
         wb2.save(str(file_name_dst))
         print("PLIK SKOPIOWANO")
     except InvalidFileException:
-        print("Nieobslugiwany format pliku!", e.filename)
+        print("Nieobslugiwany format pliku!")
     except PermissionError as e:
         print("Brak uprawnien do pliku!", e.filename)
     except FileNotFoundError as e:

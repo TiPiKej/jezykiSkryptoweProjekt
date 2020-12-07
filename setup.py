@@ -14,7 +14,8 @@ setup(
     url="https://github.com/TiPiKej/jezykiSkryptoweProjekt",
     packages=find_packages(),
     install_requires=[
-        "openpyxl>=3.0.5"
+        "openpyxl>=3.0.5",
+        "PrettyTable>=2.0.0"
     ],
     classifiers=[
         "Programming Language :: Python :: 3.7",
