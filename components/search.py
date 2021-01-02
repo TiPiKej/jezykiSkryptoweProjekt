@@ -20,9 +20,8 @@ def search():
 
         # pobieranie nazwy arkusza do przeszukiwania
         while True:
-            print("Podaj arkusz (dostepne: {}) w ktorym ma byc przeszukiwane wyrazenie ({}): "
-                  .format(sheets, search_query))
-            temp_sheet = input()
+            temp_sheet = input("Podaj arkusz (dostepne: {}) w ktorym ma byc przeszukiwane wyrazenie ({}): "
+                               .format(sheets, search_query))
             if temp_sheet in sheets:
                 ws = wb.worksheets[sheets.index(temp_sheet)]
                 break

@@ -90,7 +90,7 @@ def save_json_to_xlsx():
             del file
 
             if type(tables) == list:
-                add_sheet_to_workbook(tables)
+                add_sheet_to_workbook(tables, wb, overwrite=overwrite_first_sheet)
             elif type(tables) == dict:
                 for table_keys in tables.keys():
                     add_sheet_to_workbook(tables[table_keys], wb, table_keys, overwrite_first_sheet)
