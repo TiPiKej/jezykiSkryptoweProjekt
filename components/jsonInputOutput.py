@@ -98,7 +98,7 @@ def save_json_to_xlsx():
             del overwrite_first_sheet
 
             wb.save(file_name_out)
-    except IOError as e:
+    except IOError:
         print("Nie mozna wczytac pliku!")
     except UnicodeDecodeError:
         print("Cos poszlo nie tak! :(")
