@@ -1,5 +1,7 @@
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils.exceptions import InvalidFileException
+from components.basicConstants import reg_file_name_xlsx
+import re
 
 
 def copy_file():
@@ -7,6 +9,12 @@ def copy_file():
     file_name_dst = input("Wpisz nazwe pliku (lokalizacje) gdzie skopiowac: ")
     wb1 = Workbook()
     wb2 = Workbook()
+
+    if not re.search(reg_file_name_xlsx, file_name_src):
+        file_name_src = "{}.xlsx".format(file_name_src)
+
+    if not re.search(reg_file_name_xlsx, file_name_dst):
+        file_name_dst = "{}.xlsx".format(file_name_dst)
 
     print("KOPIOWANIE PLIKU")
 

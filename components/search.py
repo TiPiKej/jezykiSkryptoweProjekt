@@ -2,15 +2,14 @@ from openpyxl import Workbook, load_workbook
 from openpyxl.utils.exceptions import InvalidFileException
 from components.basicFunctions import create_reg_exp_query, print_table
 from components.jsonInputOutput import save_to_json
-from components.basicConstants import confirm_query
+from components.basicConstants import confirm_query, reg_file_name_xlsx
 import re
-
-
-# def seach_in_column(ws=Workbook().active):
 
 
 def search():
     file_name = input("Wpisz nazwe pliku (lokalizacje) do przeszukania: ")
+    if not re.search(reg_file_name_xlsx, file_name):
+        file_name = "{}.xlsx".format(file_name)
 
     result_arr = []
     wb = Workbook()

@@ -8,7 +8,7 @@ import re
 
 
 def save_to_json(table):
-    file_name = input("Podaj nazwe pliku (bez rozszerzenia) gdzie zapisac: ")
+    file_name = input("Podaj nazwe pliku (lokalizacje) gdzie zapisac: ")
 
     # check if file exist
     file = pathlib.Path(file_name)
