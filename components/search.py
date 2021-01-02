@@ -1,8 +1,12 @@
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils.exceptions import InvalidFileException
-from components.basicFunctions import create_reg_exp_query, print_table, save_to_file
+from components.basicFunctions import create_reg_exp_query, print_table
+from components.jsonInputOutput import save_to_json
 from components.basicConstants import confirm_query
 import re
+
+
+# def seach_in_column(ws=Workbook().active):
 
 
 def search():
@@ -41,7 +45,7 @@ def search():
 
         choice = input("Czy zapisac wynik wyszukiwania? (t - tak): ")
         if re.search(confirm_query, choice):
-            save_to_file(result_arr)
+            save_to_json(result_arr)
     except FileNotFoundError:
         print("File not found!!")
     except InvalidFileException:

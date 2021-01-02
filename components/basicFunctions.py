@@ -1,10 +1,8 @@
-import pathlib
 import re
-import json
 from typing import List
 
+from openpyxl import Workbook
 from prettytable import PrettyTable
-
 from components.basicConstants import confirm_query
 
 
@@ -56,7 +54,7 @@ def print_table(table: List[dict], *titles: str):
     """
     function only print list of dictionary
 
-    :param table: dictonary of list
+    :param table: list of dictonary
     :param titles: optional parm, define titles of dictionary fields to output
     """
     # if titles are empty -> titles are filles by first row of table
@@ -74,25 +72,22 @@ def print_table(table: List[dict], *titles: str):
     print("Liczba znalezionych elementow: {}".format(len(table)))
 
 
-def save_to_file(table: List[dict]):
-    file_name = input("Podaj nazwe pliku (bez rozszerzenia) gdzie zapisac wynik: ")
+def add_sheet_to_workbook(table: List[dict], wb=Workbook(), title="Untitled", overwrite=False):
+    """
+    add sheet based on table list (row, column, value)
 
-    # check if file exist
-    file = pathlib.Path(file_name)
-    if file.exists():
-        confirm = input("Plik istnieje, czy chcesz go nadpisac? (t - tak): ")
-        if not re.search(confirm_query, confirm):
-            return "Nie zapisano pliku"
-
-    # saving file
-    if not re.search("^[A-Za-z_-]+$", file_name):
-        return "Nie zapisano pliku"
-
-    try:
-        with open("{}.json".format(file_name), "w") as json_file:
-            json.dump(table, json_file)
-            print("Wynik polecenia zapisano w {}.json".format(file_name))
-    except IOError as e:
-        print("Nie mozna zapisac pliku: ", e)
-        if re.search(confirm_query, input("Czy chcesz sprobowac zapisac raz jeszcze? (t - tak) ")):
-            return save_to_file(table)
+    :param table: list[dict] - data to be saved in new sheet
+    :param wb: workbook - file where sheet will be added
+    :param title: string - sheet's name
+    :param overwrite: boolean - if is True -> it won't be created new sheet -> default sheet's title will be overwritted
+    :return: new worksheet
+    """
+    if overwrite:
+        ws = wb.worksheets[-1]
+        ws.title = title
+    else:
+        ws = wb.create_sheet(title)
+    # kopiowanie wartosci komorek
+    for cell in table:
+        ws.cell(row=cell['row'], column=cell['column']).value = cell['value']
+    return ws
