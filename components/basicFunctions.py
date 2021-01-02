@@ -1,9 +1,11 @@
+import random
 import re
 from typing import List
 
 from openpyxl import Workbook
 from prettytable import PrettyTable
-from components.basicConstants import confirm_query
+
+from components.basicConstants import confirm_query, reg_file_name_xlsx
 
 
 def create_reg_exp_query():
@@ -58,6 +60,10 @@ def print_table(table: List[dict], *titles: str):
     :param titles: optional parm, define titles of dictionary fields to output
     """
     # if titles are empty -> titles are filles by first row of table
+    if len(table) == 0:
+        print("Brak wynikow!")
+        return None
+
     if len(titles) == 0:
         titles = table[0].keys()
 
@@ -91,3 +97,35 @@ def add_sheet_to_workbook(table: List[dict], wb=Workbook(), title="Untitled", ov
     for cell in table:
         ws.cell(row=cell['row'], column=cell['column']).value = cell['value']
     return ws
+
+
+def new_static_file():
+    wb = Workbook()
+    file_name = input("Podaj nazwe pliku: ")
+    if not re.search(reg_file_name_xlsx, file_name):
+        file_name = "{}.xlsx".format(file_name)
+
+    ws = wb.active
+    ws.title = "Tabliczka mnozenia"
+
+    # ord(...) - get index of letter from ascii table
+    # chr(...) - reverse previous command -> get letter from ascii table by index
+    ascii_code_upper_a = ord("A")
+
+    for row in range(1, 11):
+        for column in range(1, 11):
+            ws["{}{}".format(chr(ascii_code_upper_a + column - 1), row)] = row * column
+
+    ws = wb.create_sheet("pi")
+    ws["A1"] = 3.14
+
+    ws = wb.create_sheet("e")
+    ws["A1"] = 2.718
+
+    ws = wb.create_sheet("losowe liczby")
+
+    for i in range(1, 100):
+        ws["A{}".format(i)] = i
+        ws["B{}".format(i)] = round(random.random() * 100000) / 1000
+
+    wb.save(file_name)

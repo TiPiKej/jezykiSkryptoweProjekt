@@ -20,7 +20,7 @@ def search():
 
         # pobieranie nazwy arkusza do przeszukiwania
         while True:
-            print("Podaj arkusz (dostepne: {}) w ktorym ma byc przeszukiwane wyrazenie: {}"
+            print("Podaj arkusz (dostepne: {}) w ktorym ma byc przeszukiwane wyrazenie ({}): "
                   .format(sheets, search_query))
             temp_sheet = input()
             if temp_sheet in sheets:
@@ -33,7 +33,7 @@ def search():
                 temp_value = ws.cell(row=i, column=j).value
                 if temp_value is None:
                     continue
-                if re.search(search_query, temp_value):  # wyrazenie regularne (wyrazenie, sprawdzana wartosc)
+                if re.search(search_query, str(temp_value)):  # wyrazenie regularne (wyrazenie, sprawdzana wartosc)
                     result_arr.append({
                         "row": i,
                         "column": j,
@@ -42,9 +42,10 @@ def search():
 
         print_table(result_arr)
 
-        choice = input("Czy zapisac wynik wyszukiwania? (t - tak): ")
-        if re.search(confirm_query, choice):
-            save_to_json(result_arr)
+        if len(result_arr) > 0:
+            choice = input("Czy zapisac wynik wyszukiwania? (t - tak): ")
+            if re.search(confirm_query, choice):
+                save_to_json(result_arr)
     except FileNotFoundError:
         print("File not found!!")
     except InvalidFileException:
