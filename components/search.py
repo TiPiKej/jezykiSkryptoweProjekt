@@ -27,8 +27,8 @@ def search():
                 break
             print("Niepoprawna nazwa arkusza!")
 
-        for i in range(1, ws.max_row + 1):
-            for j in range(1, ws.max_column + 1):
+        for i in range(ws.min_row, ws.max_row + 1):
+            for j in range(ws.min_column, ws.max_column + 1):
                 temp_value = ws.cell(row=i, column=j).value
                 if temp_value is None:
                     continue
