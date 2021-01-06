@@ -125,3 +125,12 @@ def new_static_file():
         ws["B{}".format(i)] = round(random.random() * 100000) / 1000
 
     wb.save(file_name)
+
+
+def create_empty_file():
+    file_name = input("Podaj nazwe pliku: ")
+    if not re.search(reg_file_name_xlsx, file_name):
+        file_name = "{}.xlsx".format(file_name)
+
+    wb = Workbook()
+    wb.save(file_name)
