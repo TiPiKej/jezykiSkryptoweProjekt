@@ -108,13 +108,9 @@ def new_static_file():
     ws = wb.active
     ws.title = "Tabliczka mnozenia"
 
-    # ord(...) - get index of letter from ascii table
-    # chr(...) - reverse previous command -> get letter from ascii table by index
-    ascii_code_upper_a = ord("A")
-
     for row in range(1, 11):
         for column in range(1, 11):
-            ws["{}{}".format(chr(ascii_code_upper_a + column - 1), row)] = row * column
+            ws.cell(row=row, column=column).value = row * column
 
     ws = wb.create_sheet("pi")
     ws["A1"] = 3.14
