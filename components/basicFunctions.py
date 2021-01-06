@@ -1,11 +1,30 @@
 import random
 import re
-from typing import List
+import pathlib
 
+from typing import List
 from openpyxl import Workbook
 from prettytable import PrettyTable
 
 from components.basicConstants import confirm_query, reg_file_name_xlsx
+
+
+def check_if_file_exist(file_name, quiet=False):
+    """
+
+    :param file_name: string
+    :param quiet: boolean; if is True -> nothing has prompt
+    :return: if exist -> True, if not exist -> False
+    """
+    file = pathlib.Path(file_name)
+    if file.exists():
+        if quiet:
+            return True
+
+        confirm = input("Plik istnieje, czy chcesz go nadpisac? (t - tak): ")
+        if not re.search(confirm_query, confirm):
+            return True
+    return False
 
 
 def create_reg_exp_query():
@@ -105,6 +124,9 @@ def new_static_file():
     if not re.search(reg_file_name_xlsx, file_name):
         file_name = "{}.xlsx".format(file_name)
 
+    if check_if_file_exist(file_name):
+        return "Nie utworzono pliku"
+
     ws = wb.active
     ws.title = "Tabliczka mnozenia"
 
@@ -131,6 +153,9 @@ def create_empty_file():
     file_name = input("Podaj nazwe pliku: ")
     if not re.search(reg_file_name_xlsx, file_name):
         file_name = "{}.xlsx".format(file_name)
+
+    if check_if_file_exist(file_name):
+        return "Nie utworzono pliku"
 
     wb = Workbook()
     wb.save(file_name)
