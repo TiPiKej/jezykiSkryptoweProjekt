@@ -29,9 +29,9 @@ def check_if_file_exist(file_name, quiet=False):
 
 def create_reg_exp_query():
     """
-    Function getting reg exp from a user
+    funkcja pobierajaca wyrazenie regularne od uzytkownika
 
-    :return: reg exp query
+    :return: reg exp
     """
 
     print("""Opcje:
@@ -73,10 +73,10 @@ jezeli ma zawierac conajmniej x znakow dodaj po tej liczbie przecinek (np. 4,): 
 
 def print_table(table: List[dict], *titles: str):
     """
-    function only print list of dictionary
+    funkcja ktora wyswietla w konsoli dictionary
 
-    :param table: list of dictonary
-    :param titles: optional parm, define titles of dictionary fields to output
+    :param table: lista dictonary
+    :param titles: opcjonalny parmetr, parametry, z dictionary, do wyswietlenia
     """
     # if titles are empty -> titles are filles by first row of table
     if len(table) == 0:
@@ -99,13 +99,14 @@ def print_table(table: List[dict], *titles: str):
 
 def add_sheet_to_workbook(table: List[dict], wb=Workbook(), title="Untitled", overwrite=False):
     """
-    add sheet based on table list (row, column, value)
+    dodaj arkusz na podstawie listy z dictionary, parametry: (row, column, value)
 
-    :param table: list[dict] - data to be saved in new sheet
-    :param wb: workbook - file where sheet will be added
-    :param title: string - sheet's name
-    :param overwrite: boolean - if is True -> it won't be created new sheet -> default sheet's title will be overwritted
-    :return: new worksheet
+    :param table: list[dict] - dane do zapisania do arkusza
+    :param wb: workbook - plik gdzie ma byc zapisany wynik
+    :param title: string - nazwa arkusza do zapisania wyniku
+    :param overwrite: boolean - jesli prawda -> to nadpisze arkusz, jesli falsz -> doda nowy arkusz
+    (parametr pomocny gdy jest utworzony nowy plik i chcemy nadpisac domyslny arkusz)
+    :return: nowy worksheet
     """
     if overwrite:
         ws = wb.worksheets[-1]
@@ -191,7 +192,13 @@ def get_data(ws, search_query=""):
     return result_arr
 
 
-def get_sheet(wb, search_query=""):
+def get_sheet(wb: Workbook, search_query=""):
+    """
+    wybiera arkusz
+    :param wb: workbook - plik
+    :param search_query: string - jesli cos jest przeszukiwane to pokaze query
+    :return: arkusz wybrany przez uzytkownika
+    """
     sheets = [wb.worksheets[i].title for i in range(len(wb.worksheets))]
     while True:
         if search_query == "":
