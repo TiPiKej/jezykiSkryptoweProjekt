@@ -29,7 +29,9 @@ def search():
         if len(result_arr) > 0:
             choice = input("Czy zapisac wynik wyszukiwania? (t - tak): ")
             if re.search(confirm_query, choice):
-                save_to_json(result_arr)
+                save_to_json({
+                    ws.title: result_arr
+                })
     except FileNotFoundError:
         print("File not found!!")
     except InvalidFileException:
