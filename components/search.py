@@ -1,6 +1,6 @@
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils.exceptions import InvalidFileException
-from components.basicFunctions import create_reg_exp_query, print_table
+from components.basicFunctions import create_reg_exp_query, print_table, get_data
 from components.jsonInputOutput import save_to_json
 from components.basicConstants import confirm_query, reg_file_name_xlsx
 import re
@@ -27,17 +27,7 @@ def search():
                 break
             print("Niepoprawna nazwa arkusza!")
 
-        for i in range(ws.min_row, ws.max_row + 1):
-            for j in range(ws.min_column, ws.max_column + 1):
-                temp_value = ws.cell(row=i, column=j).value
-                if temp_value is None:
-                    continue
-                if re.search(search_query, str(temp_value)):  # wyrazenie regularne (wyrazenie, sprawdzana wartosc)
-                    result_arr.append({
-                        "row": i,
-                        "column": j,
-                        "value": temp_value
-                    })
+        result_arr = get_data(ws, search_query)
 
         print_table(result_arr)
 

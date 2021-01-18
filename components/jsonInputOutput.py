@@ -1,5 +1,5 @@
 from components.basicConstants import confirm_query, reg_file_name_json, reg_file_name_xlsx
-from components.basicFunctions import add_sheet_to_workbook, check_if_file_exist
+from components.basicFunctions import add_sheet_to_workbook, check_if_file_exist, get_data
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils.exceptions import InvalidFileException
 import json
@@ -37,18 +37,7 @@ def save_xlsx_to_json():
         wb = load_workbook(file_name, read_only=True)
 
         for ws in wb.worksheets:
-            temp_res_arr = []
-            for i in range(1, ws.max_row + 1):
-                for j in range(1, ws.max_column + 1):
-                    temp_value = ws.cell(row=i, column=j).value
-                    if temp_value is None:
-                        continue
-                    temp_res_arr.append({
-                        "row": i,
-                        "column": j,
-                        "value": temp_value
-                    })
-            result_dic[ws.title] = temp_res_arr
+            result_dic[ws.title] = get_data(ws)
 
         save_to_json(result_dic)
     except FileNotFoundError:

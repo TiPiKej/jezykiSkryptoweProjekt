@@ -159,3 +159,33 @@ def create_empty_file():
 
     wb = Workbook()
     wb.save(file_name)
+
+
+def get_data(ws, search_query=""):
+    """
+    zwraca dane z arkusza
+    :param ws: arkusz
+    :param search_query: regexp
+    :return: arr - jesli search_query ustawione -> zwraca pasujace wyniki, w przeciwnym wypadku -> zwraca wszystko
+    """
+    result_arr = []
+    for i in range(ws.min_row, ws.max_row + 1):
+        for j in range(ws.min_column, ws.max_column + 1):
+            temp_value = ws.cell(row=i, column=j).value
+            # sprawdzam czy komorka jest pusta
+            if temp_value is None:
+                continue
+            if search_query == "":
+                result_arr.append({
+                    "row": i,
+                    "column": j,
+                    "value": temp_value
+                })
+                continue
+            if re.search(search_query, str(temp_value)):  # wyrazenie regularne (wyrazenie, sprawdzana wartosc)
+                result_arr.append({
+                    "row": i,
+                    "column": j,
+                    "value": temp_value
+                })
+    return result_arr
