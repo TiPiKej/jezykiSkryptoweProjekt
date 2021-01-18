@@ -189,3 +189,18 @@ def get_data(ws, search_query=""):
                     "value": temp_value
                 })
     return result_arr
+
+
+def get_sheet(wb, search_query=""):
+    sheets = [wb.worksheets[i].title for i in range(len(wb.worksheets))]
+    while True:
+        if search_query == "":
+            temp_sheet = input("Podaj arkusz (dostepne: {}): ".format(sheets))
+        else:
+            temp_sheet = input(
+                "Podaj arkusz (dostepne: {}) w ktorym ma byc przeszukiwane wyrazenie ({}): ".format(sheets,
+                                                                                                    search_query))
+        if temp_sheet in sheets:
+            ws = wb.worksheets[sheets.index(temp_sheet)]
+            return ws
+        print("Niepoprawna nazwa arkusza!")
