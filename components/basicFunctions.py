@@ -11,10 +11,10 @@ from components.basicConstants import confirm_query, reg_file_name_xlsx
 
 def check_if_file_exist(file_name, quiet=False):
     """
-
+    funkcja sprawdzająca czy podany plik istnieje
     :param file_name: string
-    :param quiet: boolean; if is True -> nothing has prompt
-    :return: if exist -> True, if not exist -> False
+    :param quiet: boolean; jeśli True -> nic nie wyświetla
+    :return: jeśli istnieje -> True, jeśli nie istnieje -> False
     """
     file = pathlib.Path(file_name)
     if file.exists():
