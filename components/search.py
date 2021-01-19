@@ -32,9 +32,11 @@ def search():
                 save_to_json({
                     ws.title: result_arr
                 })
-    except FileNotFoundError:
-        print("File not found!!")
     except InvalidFileException:
-        print("File format not supported!!")
+        print("Nieobslugiwany format pliku!")
+    except PermissionError as e:
+        print("Brak uprawnien do pliku!", e.filename)
+    except FileNotFoundError as e:
+        print("Nie znaleziono lokalizacji!", e.filename)
     finally:
         wb.close()
