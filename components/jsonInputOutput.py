@@ -43,10 +43,12 @@ def save_xlsx_to_json():
             result_dic[ws.title] = get_data(ws)
 
         save_to_json(result_dic)
-    except FileNotFoundError:
-        print("File not found!!")
     except InvalidFileException:
-        print("File format not supported!!")
+        print("Nieobslugiwany format pliku!")
+    except PermissionError as e:
+        print("Brak uprawnien do pliku!", e.filename)
+    except FileNotFoundError as e:
+        print("Nie znaleziono lokalizacji!", e.filename)
     finally:
         wb.close()
 
@@ -83,8 +85,9 @@ def save_json_to_xlsx():
             del overwrite_first_sheet
 
             wb.save(file_name_out)
-    except IOError as e:
-        print("Nie mozna wczytac pliku!")
-        print(e)
-    except UnicodeDecodeError:
-        print("Cos poszlo nie tak! :(")
+    except InvalidFileException:
+        print("Nieobslugiwany format pliku!")
+    except PermissionError as e:
+        print("Brak uprawnien do pliku!", e.filename)
+    except FileNotFoundError as e:
+        print("Nie znaleziono lokalizacji!", e.filename)
