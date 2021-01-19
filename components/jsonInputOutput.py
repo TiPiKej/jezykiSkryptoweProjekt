@@ -28,7 +28,10 @@ def save_to_json(table):
 
 
 def save_xlsx_to_json():
-    file_name = input("Wpisz nazwe pliku (lokalizacje pliku z rozszerzeniem xlsx) do eksportu (do pliku json): ")
+    file_name = input(
+        "Wpisz nazwe pliku " +
+        "(lokalizacje pliku z rozszerzeniem xlsx) " +
+        "do eksportu (do pliku json): ")
     result_dic = {}
     wb = Workbook()
     try:
@@ -49,7 +52,10 @@ def save_xlsx_to_json():
 
 
 def save_json_to_xlsx():
-    file_name = input("Wpisz nazwe pliku (lokalizacje pliku z rozszerzeniem json) do eksportu (do pliku xlsx): ")
+    file_name = input(
+        "Wpisz nazwe pliku " +
+        "(lokalizacje pliku z rozszerzeniem json) " +
+        "do eksportu (do pliku xlsx): ")
     if not re.search(reg_file_name_json, file_name):
         file_name = "{}.json".format(file_name)
 
