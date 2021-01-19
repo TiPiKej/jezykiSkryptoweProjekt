@@ -1,22 +1,29 @@
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils.exceptions import InvalidFileException
 from components.basicConstants import reg_file_name_xlsx
+from components.basicFunctions import check_if_file_exist
 import re
 
 
 def copy_file():
+    # pobranie od uzytkownika nazw plikow
     file_name_src = input("Wpisz nazwe pliku (lokalizacje) do skopiowania: ")
     file_name_dst = input("Wpisz nazwe pliku (lokalizacje) gdzie skopiowac: ")
+
+    # zainicjowanie zmiennych
     wb1 = Workbook()
     wb2 = Workbook()
 
+    # poprawienie rozszerzen plikow
     if not re.search(reg_file_name_xlsx, file_name_src):
         file_name_src = "{}.xlsx".format(file_name_src)
 
     if not re.search(reg_file_name_xlsx, file_name_dst):
         file_name_dst = "{}.xlsx".format(file_name_dst)
 
-    print("KOPIOWANIE PLIKU")
+    # sprawdzenie czy plik do zapisania istnieje
+    if check_if_file_exist(file_name_dst):
+        return "Nie utworzono pliku"
 
     try:
         wb1 = load_workbook(file_name_src)  # zaladowanie arkusza
