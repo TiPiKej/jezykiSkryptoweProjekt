@@ -26,8 +26,8 @@ def copy_file():
         for n in range(len(wb1.worksheets)):
             ws1 = wb1.worksheets[n]  # ustawienie aktywnego arkusza (do skopiowania) na kolejny
             # kopiowanie wartosci komorek
-            for i in range(1, ws1.max_row + 1):
-                for j in range(1, ws1.max_column + 1):
+            for i in range(ws1.min_row, ws1.max_row + 1):
+                for j in range(ws1.min_column, ws1.max_column + 1):
                     cell = ws1.cell(row=i, column=j)
 
                     ws2.cell(row=i, column=j).value = cell.value
