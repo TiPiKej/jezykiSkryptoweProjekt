@@ -71,24 +71,23 @@ jezeli ma zawierac conajmniej x znakow dodaj po tej liczbie przecinek (np. 4,): 
     return query
 
 
-def print_table(table: List[dict], *titles: str):
+def print_table(table: List[dict]):
     """
     funkcja ktora wyswietla w konsoli dictionary
 
     :param table: lista dictonary
-    :param titles: opcjonalny parmetr, parametry, z dictionary, do wyswietlenia
     """
-    # if titles are empty -> titles are filles by first row of table
+    # jeśli tablica table jest pusta, to informujemy o tym uzytkownika
     if len(table) == 0:
         print("Brak wynikow!")
         return None
 
-    if len(titles) == 0:
-        titles = table[0].keys()
+    # uzupelniamy tytul kluczami z pierwszego elementu
+    titles = table[0].keys()
 
     pretty_table = PrettyTable()
 
-    pretty_table.field_names = [title for title in titles]  # add table's header
+    pretty_table.field_names = [title for title in titles]
 
     for cell in table:
         pretty_table.add_row([cell[title] for title in titles])
